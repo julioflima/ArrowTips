@@ -3,6 +3,7 @@ import { Robot } from "./_lib/Robot";
 
 const isDev = !process.env.AWS_REGION || false;
 
+console.log(isDev)
 class Main {
   constructor() {
   }

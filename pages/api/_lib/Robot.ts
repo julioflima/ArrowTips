@@ -11,7 +11,7 @@ export class Robot {
     this.isDev = isDev;
     this.chrome = new Chrome();
     this.puppeteer = puppeteer;
-    this.baseUrl = "https://www.bet365.com/#/AS/B83/";
+    this.baseUrl = "https://www.bet365.com";
   }
 
   private async getPage(): Promise<Page> {
@@ -21,6 +21,8 @@ export class Robot {
 
     const options = await this.chrome.getOptions(this.isDev);
     const browser = await this.puppeteer.launch(options);
+
+    console.log(options);
 
     this.page = await browser.newPage();
 
@@ -33,23 +35,24 @@ export class Robot {
 
       await page.goto(this.baseUrl, { waitUntil: "networkidle2" });
 
+      let games = await page.evaluate(() => document.body.innerHTML);
 
-      const games = await page.evaluateHandle(() => {
-        const element = document.querySelectorAll(
-          ".gl-MarketGroupContainer div:last-child div.sm-SplashMarketContainer_Expanded"
-        );
-        const objects = [];
-        const games = [];
+      // const games = await page.evaluateHandle(() => {
+      //   const element = document.querySelectorAll(
+      //     ".gl-MarketGroupContainer div:last-child div.sm-SplashMarketContainer_Expanded"
+      //   );
+      //   const objects = [];
+      //   const games = [];
 
-        console.log(element);
+      //   console.log(element);
 
-        element.forEach((each) => objects.push(...each.childNodes));
-        objects.forEach((each) => games.push(each.childNodes[0].innerText));
+      //   element.forEach((each) => objects.push(...each.childNodes));
+      //   objects.forEach((each) => games.push(each.childNodes[0].innerText));
 
-        console.log(games);
-      });
+      //   console.log(games);
+      // });
 
-      console.log(games);
+      // console.log(games);
 
       return games;
     } catch (error) {
