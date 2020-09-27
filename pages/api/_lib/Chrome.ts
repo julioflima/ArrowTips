@@ -26,6 +26,7 @@ export class Chrome {
     if (isDev) {
       options = {
         args: [
+          "--incognito",
           "--no-sandbox",
           "--disable-setuid-sandbox",
           "--disable-infobars",
@@ -41,7 +42,7 @@ export class Chrome {
       options = {
         args: chrome.args,
         executablePath: await chrome.executablePath,
-        headless: chrome.headless,
+        headless: false,
       };
     }
 

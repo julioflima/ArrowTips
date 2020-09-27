@@ -11,7 +11,7 @@ export class Robot {
     this.isDev = isDev;
     this.chrome = new Chrome();
     this.puppeteer = puppeteer;
-    this.baseUrl = "https://www.bet365.com";
+    this.baseUrl = "https://www.bet365.com/#/AS/B83/";
   }
 
   private async getPage(): Promise<Page> {
