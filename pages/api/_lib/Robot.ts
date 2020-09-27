@@ -11,7 +11,7 @@ export class Robot {
     this.isDev = isDev;
     this.chrome = new Chrome();
     this.puppeteer = puppeteer;
-    this.baseUrl = "https://www.bet365.com/#/AS/B83/";
+    this.baseUrl = "https://mobile.288365.com";
   }
 
   private async getPage(): Promise<Page> {
@@ -22,8 +22,6 @@ export class Robot {
     const options = await this.chrome.getOptions(this.isDev);
     const browser = await this.puppeteer.launch(options);
 
-    console.log(options);
-
     this.page = await browser.newPage();
 
     return this.page;
@@ -33,28 +31,33 @@ export class Robot {
     try {
       const page = await this.getPage();
 
+      page.waitFor(8000);
+
       await page.goto(this.baseUrl, { waitUntil: "networkidle2" });
 
-      let games = await page.evaluate(() => document.body.innerHTML);
+      let bodyHTML = await page.evaluate(() => document.body.innerHTML);
 
-      // const games = await page.evaluateHandle(() => {
-      //   const element = document.querySelectorAll(
-      //     ".gl-MarketGroupContainer div:last-child div.sm-SplashMarketContainer_Expanded"
-      //   );
-      //   const objects = [];
-      //   const games = [];
+      console.log(bodyHTML);
 
-      //   console.log(element);
+      // // const games = await page.evaluateHandle(() => {
+      // //   const element = document.querySelectorAll(
+      // //     ".gl-MarketGroupContainer div:last-child div.sm-SplashMarketContainer_Expanded"
+      // //   );
+      // //   const objects = [];
+      // //   const games = [];
 
-      //   element.forEach((each) => objects.push(...each.childNodes));
-      //   objects.forEach((each) => games.push(each.childNodes[0].innerText));
+      // //   console.log(element);
 
-      //   console.log(games);
-      // });
+      // //   element.forEach((each) => objects.push(...each.childNodes));
+      // //   objects.forEach((each) => games.push(each.childNodes[0].innerText));
+
+      // //   console.log(games);
+      // //   return games;
+      // // });
 
       // console.log(games);
 
-      return games;
+      // return games;
     } catch (error) {
       console.error(error);
     }
